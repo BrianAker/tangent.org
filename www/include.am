@@ -1,0 +1,38 @@
+# vim:ft=automake
+# included from Top Level Makefile.am
+# All paths should be given relative to the root
+
+# Makefile for Sphinx documentation
+#
+
+SPHINXOPTS    = ${SPHINX_WARNINGS}
+PAPER         =
+SPHINX_BUILDDIR      = ${top_builddir}/tangent.org/html
+
+# Internal variables.
+PAPEROPT_a4     = -D latex_paper_size=a4
+PAPEROPT_letter = -D latex_paper_size=letter
+ALLSPHINXOPTS   = -d $(SPHINX_BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) ${top_srcdir}/www
+
+all: www openid openid
+
+rm-css:
+	@rm -f html/_static/default.css
+
+openid: 
+	@mkdir -p html/.well-known/
+	@cp www/openid/host-meta $(SPHINX_BUILDDIR)/.well-known
+	@cp www/openid/openid $(SPHINX_BUILDDIR)/
+	@cp www/openid/htaccess $(SPHINX_BUILDDIR)/.htaccess
+
+
+www: www/conf.py rm-css www/index.rst linkcheck 
+	PYTHONPATH=${top_srcdir}/www sphinx-build -b html $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)
+	@echo
+	@echo "Build finished. The HTML pages are in $(SPHINX_BUILDDIR)."
+
+linkcheck: www/conf.py
+	PYTHONPATH=${top_srcdir}/www  sphinx-build -b linkcheck $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/linkcheck
+	@echo
+	@echo "Link check complete; look for any errors in the above output " \
+	      "or in $(SPHINX_BUILDDIR)/linkcheck/output.txt."
