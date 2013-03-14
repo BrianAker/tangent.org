@@ -28,7 +28,7 @@ check_PROGRAMS=
 apachedir = $(sysconfdir)
 apache_DATA=
 
-tangentdir = $(localstatedir)/www
+tangentdir = $(localstatedir)
 tangent_DATA=
 
 include www/include.am
@@ -38,3 +38,17 @@ include httpd/include.am
 test: check
 
 TESTS+= ${check_PROGRAMS}
+
+maintainer-clean-local:
+	find . -type f -name '*~' -exec rm -f '{}' \;
+	-rm -f @PACKAGE@-*.rpm
+	-rm -f @PACKAGE@-*.tar.gz
+	-rm Makefile.in
+	-rm aclocal.m4
+	-rm config.log
+	-rm config.status
+	-rm configure
+	-rm -rf tangent.org
+	-rm -rf config
+	-rm -rf build-aux
+	-rm -rf ${top_builddir}/tangent.org

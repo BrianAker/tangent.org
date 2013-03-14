@@ -4,5 +4,5 @@ if test -f configure; then make clean; make merge-clean; make distclean; fi;
 
 rm -r -f autom4te.cache
 autoreconf --install --force --verbose -Wall
-./configure
+./configure --prefix=/
 make
