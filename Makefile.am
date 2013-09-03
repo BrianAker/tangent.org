@@ -52,14 +52,18 @@ html_DATA+= docs/html/objects.inv
 html_DATA+= docs/html/search.html
 html_DATA+= docs/html/searchindex.js
 html_DATA+= docs/html/_static/favicon.ico
+html_DATA+= docs/html/_static/TangentOrg.png
 
+EXTRA_DIST+= $(html_DATA)
+EXTRA_DIST+= $(image_DATA)
+EXTRA_DIST+= $(nobase_apache_DATA)
+EXTRA_DIST+= $(sources_DATA)
+EXTRA_DIST+= $(static_DATA)
+EXTRA_DIST+= $(wellknown_DATA)
 
 test: check
 
 all: | html-local
-
-
-TESTS+= ${check_PROGRAMS}
 
 maintainer-clean-local:
 	find . -type f -name '*~' -exec rm -f '{}' \;
