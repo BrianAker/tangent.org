@@ -1,0 +1,22 @@
+# vim:ft=apache:expandtab:shiftwidth=2:tabstop=2:smarttab:ai:
+#
+<Directory "@HTMLDIR@">
+  DirectoryIndex index.html
+  Options Indexes FollowSymLinks ExecCGI
+  AllowOverride FileInfo
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<VirtualHost *:80>
+  ServerAdmin brian@tangent.org
+  DocumentRoot "@HTMLDIR@"
+  ServerName @PACKAGE_NAME@
+  ServerAlias @PACKAGE_NAME@ www.@PACKAGE_NAME@
+  ServerAdmin brian@tangent.org
+  ErrorDocument 404 /index.html
+  <Files openid>
+    ForceType application/xrds+xml
+  </Files>
+</VirtualHost>
+

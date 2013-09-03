@@ -24,18 +24,40 @@ CLEANFILES=
 EXTRA_DIST=
 TESTS=
 check_PROGRAMS=
+html_DATA=
 
-apachedir = $(sysconfdir)
-apache_DATA=
+apachedir= $(sysconfdir)/httpd
+imagedir= $(htmldir)/_images
+sourcesdir= $(htmldir)/_sources
+staticdir= $(htmldir)/_static
+wellknowndir= $(htmldir)/.well-known
 
-tangentdir = $(localstatedir)
-tangent_DATA=
+image_DATA=
+sources_DATA=
+static_DATA=
+wellknown_DATA=
+nobase_apache_DATA=
 
-include www/include.am
-include httpd/include.am
+include docs/include.mk
+include conf.d/include.mk
+include openid/include.mk
+
+sources_DATA+= docs/html/_sources/*
+static_DATA+= docs/html/_static/*
+image_DATA+= docs/html/_images/*
+
+html_DATA+= docs/html/about.html
+html_DATA+= docs/html/index.html
+html_DATA+= docs/html/objects.inv
+html_DATA+= docs/html/search.html
+html_DATA+= docs/html/searchindex.js
+html_DATA+= docs/html/_static/favicon.ico
 
 
 test: check
+
+all: | html-local
+
 
 TESTS+= ${check_PROGRAMS}
 
@@ -48,7 +70,6 @@ maintainer-clean-local:
 	-rm config.log
 	-rm config.status
 	-rm configure
-	-rm -rf tangent.org
+	-rm -rf docs/html
 	-rm -rf config
 	-rm -rf build-aux
-	-rm -rf ${top_builddir}/tangent.org

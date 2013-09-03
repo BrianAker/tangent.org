@@ -1,5 +1,0 @@
-# vim:ft=automake
-
-nobase_apache_DATA=
-nobase_apache_DATA+= httpd/conf.d/0.conf
-nobase_apache_DATA+= httpd/conf.d/tangent.conf

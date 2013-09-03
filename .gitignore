@@ -1,0 +1,16 @@
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+build-aux
+conf.d/tangent.conf
+config.h
+config.in~
+config.log
+config.status
+configure
+docs/conf.py
+docs/doctrees
+docs/html
+stamp-h1
+docs/linkcheck
