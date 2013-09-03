@@ -70,6 +70,6 @@ maintainer-clean-local:
 	-rm config.log
 	-rm config.status
 	-rm configure
-	-rm -rf docs/html
 	-rm -rf config
 	-rm -rf build-aux
+	-rm config.in

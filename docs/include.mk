@@ -8,17 +8,26 @@
 SPHINXOPTS    = ${SPHINX_WARNINGS}
 PAPER         =
 SPHINX_BUILDDIR      = ${top_builddir}/docs
-SPHINXBUILD = sphinx-build
+SPHINX_BUILDDIR_HTML      = ${SPHINX_BUILDDIR}/html
+SPHINX_BUILDDIR_LINKCHECK      = ${SPHINX_BUILDDIR}/linkcheck
+SPHINX_BUILDDIR_DOCTREES      = ${SPHINX_BUILDDIR}/doctrees
+SPHINXBUILD = @SPHINXBUILD@
+RST=
+RST+= ${SPHINX_BUILDDIR}/index.rst
+RST+= ${SPHINX_BUILDDIR}/about.rst
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d ${SPHINX_BUILDDIR}/doctrees $(PAPEROPT_$(PAPER)) ${SPHINXOPTS} ${SPHINX_BUILDDIR}
+ALLSPHINXOPTS   = -d ${SPHINX_BUILDDIR_DOCTREES} $(PAPEROPT_$(PAPER)) ${SPHINXOPTS} ${SPHINX_BUILDDIR}
 
-html-local: ${SPHINX_BUILDDIR}/conf.py ${SPHINX_BUILDDIR}/index.rst ${SPHINX_BUILDDIR}/about.rst
-	@PYTHONPATH=${SPHINX_BUILDDIR} ${SPHINXBUILD} -b html ${ALLSPHINXOPTS} ${SPHINX_BUILDDIR}/html
+clean-local:
+	rm -rf ${SPHINX_BUILDDIR_HTML}
+	rm -rf ${SPHINX_BUILDDIR_LINKCHECK}
+	rm -rf ${SPHINX_BUILDDIR_DOCTREES}
 
-linkcheck: ${SPHINX_BUILDDIR}/conf.py
-	PYTHONPATH=${SPHINX_BUILDDIR} ${SPHINXBUILD} -b linkcheck ${ALLSPHINXOPTS} ${SPHINX_BUILDDIR}/linkcheck
-	@echo
-	@echo "Link check complete; look for any errors in the above output or in ${SPHINX_BUILDDIR}/linkcheck/output.txt."
+html-local: ${SPHINX_BUILDDIR}/conf.py ${RST}
+	@PYTHONPATH=${SPHINX_BUILDDIR} ${SPHINXBUILD} -b html ${ALLSPHINXOPTS} ${SPHINX_BUILDDIR_HTML}
+
+linkcheck: ${SPHINX_BUILDDIR}/conf.py ${RST}
+	PYTHONPATH=${SPHINX_BUILDDIR} ${SPHINXBUILD} -b linkcheck ${ALLSPHINXOPTS} ${SPHINX_BUILDDIR_LINKCHECK}
